@@ -1,3 +1,4 @@
+*.yaml
 .DS_Store
 .tmp
 # Byte-compiled / optimized / DLL files
@@ -136,3 +137,4 @@ cython_debug/
 
 config.yaml.env
 .DS_Store
+base_images/default/config.yaml

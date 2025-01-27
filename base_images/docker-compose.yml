@@ -19,8 +19,8 @@ services:
     # Strategy container (dynamic configurations)
   strategy:
     build:
-      context: ..
-      dockerfile: superalgos/${STRATEGY_NAME}/Dockerfile
+      context: ../superalgos/${STRATEGY_NAME}
+      dockerfile: Dockerfile
     container_name: ${STRATEGY_CONTAINER_NAME}
     environment:
       - CONFIG_FILE=/app/config.yaml
@@ -37,6 +37,7 @@ services:
     extends: strategy
     volumes:
       - ${MERGED_CONFIG}:/app/config.yaml
+    restart: no
 
 volumes:
   redis_data:

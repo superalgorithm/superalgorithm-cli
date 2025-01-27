@@ -6,24 +6,21 @@ from superalgorithm.utils.config import config
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
-logger = logging.getLogger("market_maker")
+logger = logging.getLogger("sample strategy")
 
 
 async def main():
-    config_path = "config.yaml"
-    logger.error(os.listdir("/"))
-    if not os.path.exists(config_path):
-        logger.error(f"Config file not found at {config_path}")
-        logger.error("Current directory contents:")
-        logger.error(os.listdir("/"))
-        raise FileNotFoundError(f"Config file not found at {config_path}")
-    else:
-        logger.info(f"Config file found at {config_path}")
 
-    environment = os.getenv("MODE", "live")
+    mode = os.getenv("MODE", "live")
+
+    if mode == "live":
+        # place your live strategy code here
+        logger.info("Running in live mode.")
+    else:
+        # place your backtest code here
+        logger.info("Running in backtest mode.")
 
     while True:
-        logger.info(f"Running in {environment} mode.")
         logger.info(config["default_config"])
         await asyncio.sleep(2)
 
