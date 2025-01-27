@@ -138,3 +138,5 @@ cython_debug/
 config.yaml.env
 .DS_Store
 base_images/default/config.yaml
+superalgos/*/configs/*.yaml
+
