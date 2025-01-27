@@ -21,7 +21,9 @@ async def main():
         logger.info("Running in backtest mode.")
 
     while True:
-        logger.info(config["default_config"])
+        logger.info(config["exchange"])
+        logger.info(config["budget"])
+        logger.info(config["api_key"])
         await asyncio.sleep(2)
 
 

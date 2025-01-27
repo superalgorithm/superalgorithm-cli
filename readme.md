@@ -41,7 +41,7 @@ else:
 
 Any file changes will automatically trigger a re-build of the docker container. This enables you to make changes and test your strategies without continously running docker commands. To stop automative re-builds simply exit the command with `ctrl + c`.
 
-Check the `sma_strategy` file for an example setup.
+Check the `sma_strategy` folder for an example setup.
 
 ### 2. Deploy to Remote Server
 
@@ -60,7 +60,15 @@ When deploying to the remote the cli will upload the following files:
 - common/\*
 - superalgos/<selected strategy>\* (excluding configs folder)
 
-During this process the selected config from the superalgos will be merged with the default config from base_images/default/config.yaml. and uploaded as config.yaml. This enables you to place common configs in base_images/default/config.yaml and override them in each strategy config.
+**Config Merging Logic:**
+
+During the build process the selected config from the `superalgos/<strategy>/configs` folder will be merged with the default config from `base_images/default/config.yaml` and uploaded as the final `config.yaml` in the container root.
+
+This enables you to place common configuration information in `base_images/default/config.yaml` and read or override these for each individual strategy you are running.
+
+You can read the configuration data using `from superalgorithm.utils.config import config`.
+
+Check the sample_strategy for a demo on how it reads default and overwrites data. To make this work rename the demo config.yaml.template to config.yaml.
 
 ### 3. Manage Running Strategies
 
