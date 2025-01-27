@@ -6,10 +6,11 @@ source "$(dirname "$0")/utils/env.sh"
 show_menu() {
     echo "What would you like to do?"
     echo "1) Test Strategy Locally"
-    echo "2) Deploy Strategy to Remote Server"
+    echo "2) Deploy to Remote Server"
     echo "3) Manage Running Strategies"
-    echo "4) Update Scripts"
-    echo "5) Uninstall CLI"
+    echo "4) Initialize New Project"
+    echo "5) Update superalgorithm CLI"
+    echo "6) Uninstall superalgorithm CLI"
     echo "q) Quit"
 }
 
@@ -28,9 +29,12 @@ while true; do
             $PROJECT_ROOT/scripts/manage.sh
             ;;
         4)
-            $HOME/.superalgorithm/scripts/update.sh
+            $HOME/.superalgorithm/scripts/init.sh
             ;;
         5)
+            $HOME/.superalgorithm/scripts/update.sh
+            ;;
+        6)
             read -p "Are you sure you want to uninstall? (y/n): " confirm
             if [[ "$confirm" =~ ^[Yy]$ ]]; then
                 rm -rf "$HOME/.superalgorithm"

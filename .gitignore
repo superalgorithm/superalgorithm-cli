@@ -134,4 +134,4 @@ cython_debug/
 # VS Code
 .vscode/
 
-config.yaml
+config.yaml.env
