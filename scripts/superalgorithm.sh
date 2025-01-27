@@ -20,13 +20,13 @@ while true; do
     read -p "Select an option: " choice
     case $choice in
         1)
-            $PROJECT_ROOT/scripts/test.sh
+            $CLI_ROOT/scripts/test.sh
             ;;
         2)
-            $PROJECT_ROOT/scripts/deploy.sh
+            $CLI_ROOT/scripts/deploy.sh
             ;;
         3)
-            $PROJECT_ROOT/scripts/manage.sh
+            $CLI_ROOT/scripts/manage.sh
             ;;
         4)
             $HOME/.superalgorithm/scripts/init.sh

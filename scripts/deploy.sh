@@ -1,9 +1,8 @@
 #!/bin/bash
 set -e
 
-source "${PROJECT_ROOT}/scripts/utils/select_strategy.sh"
-source "${PROJECT_ROOT}/scripts/utils/merge_config.sh"
-
+source "$(dirname "$0")/utils/select_strategy.sh"
+source "$(dirname "$0")/utils/merge_config.sh"
 
 # Load or create deployment configuration
 ENV_FILE="${PROJECT_ROOT}/.env"

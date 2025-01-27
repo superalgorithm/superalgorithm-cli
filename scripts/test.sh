@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-source "${PROJECT_ROOT}/scripts/utils/select_strategy.sh"
-source "${PROJECT_ROOT}/scripts/utils/docker_ops.sh"
+source "$(dirname "$0")/utils/select_strategy.sh"
+source "$(dirname "$0")/utils/docker_ops.sh"
 
 # Select mode
 echo "Select mode:"

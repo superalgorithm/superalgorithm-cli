@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source "${PROJECT_ROOT}/scripts/utils/merge_config.sh"
+source "$(dirname "$0")/utils/merge_config.sh"
+
 
 # Build base image
 build_base_image() {

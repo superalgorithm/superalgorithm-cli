@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-source "${PROJECT_ROOT}/scripts/utils/select_strategy.sh"
+source "$(dirname "$0")/utils/select_strategy.sh"
 
 # Load deployment configuration for remote access
 ENV_FILE="${PROJECT_ROOT}/.env"
