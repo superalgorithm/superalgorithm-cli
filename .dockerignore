@@ -1,0 +1,112 @@
+**/configs
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Ignore virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Ignore distribution and packaging files
+*.egg-info/
+.installed.cfg
+*.egg
+*.whl
+dist/
+build/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.manifest
+*.spec
+
+# Ignore logs and databases
+*.log
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# Ignore unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Ignore documentation build files
+docs/_build/
+docs/_build/doctrees
+docs/_build/html
+docs/_build/latex
+docs/_build/man
+docs/_build/texinfo
+docs/_build/epub
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Ignore IPython profile
+profile_default/
+ipython_config.py
+
+# Ignore pyenv files
+.python-version
+
+# Ignore celery beat schedule file
+celerybeat-schedule
+
+# Ignore SageMath parsed files
+*.sage.py
+
+# Ignore Spyder project settings
+.spyderproject
+.spyproject
+
+# Ignore Rope project settings
+.ropeproject
+
+# Ignore mkdocs documentation
+/site
+
+# Ignore mypy type checker
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Ignore Pyre type checker
+.pyre/
+
+# Ignore pytype static type analyzer
+.pytype/
+
+# Ignore Cython debug symbols
+cython_debug/
+
+# Ignore VS Code settings
+.vscode/
+

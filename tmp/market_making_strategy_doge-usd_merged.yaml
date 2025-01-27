@@ -1,0 +1,11 @@
+default_config:
+  exchange: binance
+  overwritten: no
+market_making:
+  base_asset: DOGE
+  quote_asset: USD
+  min_order_amount: 0.0000
+  max_order_amount: 1000001
+  order_amount: 100001
+  order_amount_step: 10001
+  order_amount_step_size: 0.0002

@@ -1,0 +1,42 @@
+services:
+  redis:
+    build:
+      context: ../base_images/redis
+      dockerfile: Dockerfile
+    container_name: trading_redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  trading-base:
+    build:
+      context: ..
+      dockerfile: ./base_images/default/Dockerfile
+    image: trading-base:latest
+
+    # Strategy container (dynamic configurations)
+  strategy:
+    build:
+      context: ..
+      dockerfile: superalgos/${STRATEGY_NAME}/Dockerfile
+    container_name: ${STRATEGY_CONTAINER_NAME}
+    environment:
+      - CONFIG_FILE=/app/config.yaml
+      - MODE=${DEPLOYMENT_MODE:-live}
+      - PYTHONUNBUFFERED=1
+    tty: true
+    stdin_open: true
+    depends_on:
+      - trading-base
+      - redis
+    restart: unless-stopped
+
+  strategy_dev:
+    extends: strategy
+    volumes:
+      - ${MERGED_CONFIG}:/app/config.yaml
+
+volumes:
+  redis_data:
