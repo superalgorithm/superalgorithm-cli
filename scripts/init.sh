@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-TEMPLATE_DIR="$HOME/.superalgorithm/template"
+TEMPLATE_DIR="$HOME/.superalgorithm"
 TARGET_DIR="$(pwd)"
 
 # Clone template if not exists
