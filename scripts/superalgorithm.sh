@@ -9,6 +9,7 @@ show_menu() {
     echo "2) Deploy Strategy to Remote Server"
     echo "3) Manage Running Strategies"
     echo "4) Update Scripts"
+    echo "5) Uninstall CLI"
     echo "q) Quit"
 }
 
@@ -28,6 +29,15 @@ while true; do
             ;;
         4)
             $HOME/.superalgorithm/scripts/update.sh
+            ;;
+        5)
+            read -p "Are you sure you want to uninstall? (y/n): " confirm
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                rm -rf "$HOME/.superalgorithm"
+                sudo rm /usr/local/bin/superalgorithm
+                echo "Superalgorithm CLI uninstalled successfully!"
+                exit 0
+            fi
             ;;
         q)
             echo "Goodbye!"

@@ -17,6 +17,9 @@ mkdir -p "$SCRIPTS_DIR"
 # Copy scripts and utilities
 cp -r "$TEMP_DIR/scripts/"* "$SCRIPTS_DIR/"
 
+# Set execute permissions for all scripts
+chmod -R +x "$SCRIPTS_DIR/"*.sh
+
 # Create main executable
 cat > /usr/local/bin/superalgorithm << 'EOF'
 #!/bin/bash
