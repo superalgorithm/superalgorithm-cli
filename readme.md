@@ -2,7 +2,7 @@
 
 curl -o- https://raw.githubusercontent.com/superalgorithm/superalgorithm-cli/main/install.sh | bash
 
-cd their-project && superalgorithm
+cd <your-project-folder> && superalgorithm
 
 # Dependencies
 
