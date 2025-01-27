@@ -135,3 +135,4 @@ cython_debug/
 .vscode/
 
 config.yaml.env
+.DS_Store
