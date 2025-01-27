@@ -1,3 +1,4 @@
+pyrightconfig.json
 *.yaml
 .DS_Store
 .tmp
@@ -140,3 +141,4 @@ config.yaml.env
 base_images/default/config.yaml
 superalgos/*/configs/*.yaml
 
+superalgos/*/configs/*.yaml

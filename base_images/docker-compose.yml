@@ -23,6 +23,7 @@ services:
       dockerfile: Dockerfile
     container_name: ${STRATEGY_CONTAINER_NAME}
     environment:
+      - SUPER_STRATEGY_ID=${STRATEGY_CONTAINER_NAME}
       - CONFIG_FILE=/app/config.yaml
       - MODE=${DEPLOYMENT_MODE:-live}
       - PYTHONUNBUFFERED=1

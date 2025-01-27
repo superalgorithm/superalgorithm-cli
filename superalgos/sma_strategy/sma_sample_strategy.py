@@ -9,7 +9,6 @@ from superalgorithm.types import (
 from superalgorithm.utils.logging import set_chart_schema, chart, monitor
 from talipp.indicators import SMA
 
-
 class SMAStrategy(BaseStrategy):
 
     def init(self):
@@ -54,6 +53,7 @@ class SMAStrategy(BaseStrategy):
             return
 
         close = self.get("BTC/USDT", "5m").close
+        print(close)
 
         buy = self.sma[-2] < self.sma_slow[-2] and self.sma[-1] > self.sma_slow[-1]
         sell = self.sma[-2] > self.sma_slow[-2] and self.sma[-1] < self.sma_slow[-1]
