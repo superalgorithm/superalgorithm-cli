@@ -2,7 +2,7 @@
 set -e
 
 REPO_URL="https://github.com/superalgorithm/superalgorithm-cli.git"
-TEMP_DIR="/tmp/superalgorithm-update"
+TEMP_DIR="/.tmp/superalgorithm-update"
 INSTALL_DIR="$HOME/.superalgorithm"
 
 # Clone latest version
