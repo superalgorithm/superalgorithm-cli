@@ -48,11 +48,10 @@ ssh $REMOTE_USER@$REMOTE_SERVER "cd /opt/trading && \
     export STRATEGY_NAME=\"$STRATEGY_NAME\" && \
     export STRATEGY_CONTAINER_NAME=\"${STRATEGY_NAME}_${CONFIG_NAME}\" && \
     export MERGED_CONFIG=\"$MERGED_CONFIG\" && \
-    docker compose -f base_images/docker-compose.yml stop strategy || true && \
-    docker compose -f base_images/docker-compose.yml rm -f strategy || true && \
-    docker compose -f base_images/docker-compose.yml build trading-base && \
+    docker compose -f base_images/docker-compose.yml down && \
+    docker rmi \$(docker images -q '*${STRATEGY_NAME}*') 2>/dev/null || true && \
+    docker compose -f base_images/docker-compose.yml build --no-cache trading-base strategy && \
     docker compose -f base_images/docker-compose.yml up -d strategy && \
-    docker compose -f base_images/docker-compose.yml logs -f strategy
-    "
+    docker compose -f base_images/docker-compose.yml logs -f strategy"
 
 echo "Deployment complete! Strategy ${STRATEGY_NAME}_${CONFIG_NAME} is running on $REMOTE_SERVER"
