@@ -24,6 +24,17 @@ build_base_image
 
 build_strategy "$DEPLOY_MODE"
 
+# Cleanup
+cleanup() {
+    echo "Cleaning up..."
+    kill $LOG_PID 2>/dev/null || true
+    cleanup_strategy
+    docker compose -f $PROJECT_ROOT/base_images/docker-compose.yml down
+    exit 0
+}
+
+trap cleanup SIGINT SIGTERM EXIT
+
 # Watch for changes
 fswatch -o "$PROJECT_ROOT/common" "$PROJECT_ROOT/superalgos" | while read
 do
@@ -31,5 +42,3 @@ do
     build_strategy  "$DEPLOY_MODE"
 done
 
-# Cleanup
-trap "kill $LOG_PID" EXIT

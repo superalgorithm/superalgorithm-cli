@@ -1,8 +1,8 @@
 pytest
 asyncio
-ccxt==4.4.39
-superalgorithm==0.0.19
+ccxt
+superalgorithm
 talipp
-transitions==0.9.2
+transitions
 scipy
 pandas

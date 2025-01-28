@@ -2,9 +2,6 @@ import asyncio
 import os
 import logging
 from common.utils import common_hello
-
-
-
 from superalgorithm.utils.config import config
 from sma_sample_strategy import SMAStrategy
 from superalgorithm.exchange import CCXTExchange

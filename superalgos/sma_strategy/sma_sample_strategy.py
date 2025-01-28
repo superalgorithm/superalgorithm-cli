@@ -53,7 +53,6 @@ class SMAStrategy(BaseStrategy):
             return
 
         close = self.get("BTC/USDT", "5m").close
-        print(close)
 
         buy = self.sma[-2] < self.sma_slow[-2] and self.sma[-1] > self.sma_slow[-1]
         sell = self.sma[-2] > self.sma_slow[-2] and self.sma[-1] < self.sma_slow[-1]
