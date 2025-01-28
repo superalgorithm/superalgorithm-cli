@@ -48,7 +48,6 @@ ssh $REMOTE_USER@$REMOTE_SERVER "cd /opt/trading && \
     export STRATEGY_NAME=\"$STRATEGY_NAME\" && \
     export STRATEGY_CONTAINER_NAME=\"${STRATEGY_NAME}_${CONFIG_NAME}\" && \
     export MERGED_CONFIG=\"$MERGED_CONFIG\" && \
-    docker compose -f base_images/docker-compose.yml down && \
     docker rmi \$(docker images -q '*${STRATEGY_NAME}*') 2>/dev/null || true && \
     docker compose -f base_images/docker-compose.yml build --no-cache trading-base strategy && \
     docker compose -f base_images/docker-compose.yml up -d strategy && \
