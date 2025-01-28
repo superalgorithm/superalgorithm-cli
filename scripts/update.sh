@@ -22,6 +22,5 @@ echo "Superalgorithm scripts updated successfully!"
 echo "Restarting CLI to apply updates..."
 echo "Please run 'superalgorithm' again."
 
-# Kill the parent superalgorithm process to force a restart
-pkill -P $PPID || true
-exit 0
+# Force exit the entire CLI
+kill -9 $$ || true

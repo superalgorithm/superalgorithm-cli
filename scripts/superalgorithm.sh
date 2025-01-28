@@ -16,8 +16,13 @@ show_menu() {
 
 # Main loop
 while true; do
+    
+    trap "exit 0" TERM
+    
     show_menu
+    
     read -p "Select an option: " choice
+    
     case $choice in
         1)
             $CLI_ROOT/scripts/test.sh
