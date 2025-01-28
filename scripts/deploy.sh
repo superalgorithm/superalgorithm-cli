@@ -34,13 +34,13 @@ export MERGED_CONFIG=$(merge_config)
 read -p "Do you want to upload the merged configuration? (y/n): " UPLOAD_CONFIG
 
 echo "Copying project files..."
-rsync -av --delete $PROJECT_ROOT/{base_images,common} $REMOTE_USER@$REMOTE_SERVER:/opt/trading/
-rsync -av --delete --exclude 'configs' --rsync-path="mkdir -p /opt/trading/superalgos/ && rsync" $PROJECT_ROOT/superalgos/${STRATEGY_NAME}/ $REMOTE_USER@$REMOTE_SERVER:/opt/trading/superalgos/${STRATEGY_NAME}/
+rsync -avv --delete $PROJECT_ROOT/{base_images,common} $REMOTE_USER@$REMOTE_SERVER:/opt/trading/
+rsync -avv --delete --exclude 'configs' --rsync-path="mkdir -p /opt/trading/superalgos/ && rsync" $PROJECT_ROOT/superalgos/${STRATEGY_NAME}/ $REMOTE_USER@$REMOTE_SERVER:/opt/trading/superalgos/${STRATEGY_NAME}/
 
 if [[ "$UPLOAD_CONFIG" =~ ^[Yy]$ ]]; then
     echo "Uploading merged configuration..."
     echo "$MERGED_CONFIG $STRATEGY_NAME"
-    rsync -av "$MERGED_CONFIG" $REMOTE_USER@$REMOTE_SERVER:/opt/trading/superalgos/${STRATEGY_NAME}/config.yaml
+    rsync -avv "$MERGED_CONFIG" $REMOTE_USER@$REMOTE_SERVER:/opt/trading/superalgos/${STRATEGY_NAME}/config.yaml
 fi
 
 echo "Setting up remote environment..."

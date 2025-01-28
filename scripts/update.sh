@@ -19,3 +19,9 @@ chmod -R +x "$INSTALL_DIR/scripts/"*.sh
 rm -rf "$TEMP_DIR"
 
 echo "Superalgorithm scripts updated successfully!"
+echo "Restarting CLI to apply updates..."
+echo "Please run 'superalgorithm' again."
+
+# Kill the parent superalgorithm process to force a restart
+pkill -P $PPID || true
+exit 0
