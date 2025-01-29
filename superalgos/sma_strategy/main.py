@@ -1,7 +1,7 @@
 import asyncio
 import os
 import logging
-from common.utils import common_hello
+
 from superalgorithm.utils.config import config
 from sma_sample_strategy import SMAStrategy
 from superalgorithm.exchange import CCXTExchange
@@ -26,8 +26,10 @@ async def backtest_complete_handler(strategy: SMAStrategy):
 
 async def main():
 
+
+    logger.info(config["CSV_DATA_FOLDER"])
     mode = os.getenv("MODE", "live")
-    common_hello()
+    
     if mode == "live":
 
         datasource = CCXTDataSource(symbol, "5m", exchange_id="binance")
@@ -40,7 +42,7 @@ async def main():
 
     else:
 
-        csv = CSVDataSource(symbol, "5m", csv_data_folder=config.get("CSV_DATA_FOLDER"))
+        csv = CSVDataSource(symbol, "5m", csv_data_folder=config["CSV_DATA_FOLDER"])
         strategy = SMAStrategy([csv], PaperExchange())
 
         strategy.on("backtest_done", backtest_complete_handler)

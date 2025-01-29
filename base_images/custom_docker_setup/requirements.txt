@@ -1,0 +1,8 @@
+pytest
+asyncio
+ccxt
+superalgorithm
+talipp
+transitions
+scipy
+pandas

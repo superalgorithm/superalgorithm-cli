@@ -40,10 +40,6 @@ install_dependencies() {
     # Check for package manager
     if command -v brew &> /dev/null; then
         # macOS
-        if ! command -v fswatch &> /dev/null; then
-            echo "Installing fswatch..."
-            brew install fswatch
-        fi
         if ! command -v yq &> /dev/null; then
             echo "Installing yq..."
             brew install yq
@@ -51,17 +47,12 @@ install_dependencies() {
     elif command -v apt-get &> /dev/null; then
         # Debian/Ubuntu
         sudo apt-get update
-        if ! command -v fswatch &> /dev/null; then
-            echo "Installing fswatch..."
-            sudo apt-get install -y fswatch
-        fi
         if ! command -v yq &> /dev/null; then
             echo "Installing yq..."
             sudo apt-get install -y yq
         fi
     else
         echo "Warning: Could not detect package manager. Please install dependencies manually:"
-        echo "- fswatch"
         echo "- yq"
     fi
 }

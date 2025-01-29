@@ -1,4 +1,6 @@
 pyrightconfig.json
+*.yml
+!base_images/docker-compose.yml
 *.yaml
 .DS_Store
 .tmp

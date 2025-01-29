@@ -1,0 +1,21 @@
+services:
+  ${STRATEGY_NAME}_${CONFIG_NAME}:
+    build:
+      context: ..
+      dockerfile: base_images/${DOCKER_IMAGE:-default}/Dockerfile
+      target: production
+      args:
+        - STRATEGY_NAME=${STRATEGY_NAME}
+        - DOCKER_IMAGE=${DOCKER_IMAGE:-default}
+    container_name: ${STRATEGY_NAME}_${CONFIG_NAME}
+    environment:
+      - SUPER_STRATEGY_ID=${STRATEGY_NAME}_${CONFIG_NAME}
+      - CONFIG_FILE=/app/config.yaml
+      - MODE=live
+      - PYTHONUNBUFFERED=1
+      - STRATEGY_NAME=${STRATEGY_NAME}
+    tty: true
+    stdin_open: true
+    depends_on:
+      - trading-base
+    restart: unless-stopped

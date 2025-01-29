@@ -1,6 +1,4 @@
 # rename this to config.yaml and use to share configuration settings, api keys etc. across your strategies.
 # This file will be merged with superalgos/<strategy>/configs/<name>.yaml when you run your strategy.
 # duplicate keys on the strategy level will override keys in this file.
-exchange: binance
-budget: 10000
-api_key: secret
+using_custom_docker_base: true

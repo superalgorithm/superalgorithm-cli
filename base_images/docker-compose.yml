@@ -5,39 +5,58 @@ services:
       dockerfile: Dockerfile
     container_name: trading_redis
     ports:
-      - '6379:6379'
+      - '127.0.0.1:6379:6379' # Only allow local connections
     volumes:
       - redis_data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    command: ['redis-server', '/usr/local/etc/redis/redis.conf']
     restart: unless-stopped
 
   trading-base:
     build:
       context: ..
-      dockerfile: ./base_images/default/Dockerfile
-    image: trading-base:latest
+      dockerfile: ./base_images/${DOCKER_IMAGE:-default}/Dockerfile
+      target: base
+      args:
+        - DOCKER_IMAGE=${DOCKER_IMAGE:-default}
 
-    # Strategy container (dynamic configurations)
-  strategy:
+  strategy_dev:
     build:
-      context: ../superalgos/${STRATEGY_NAME}
-      dockerfile: Dockerfile
-    container_name: ${STRATEGY_CONTAINER_NAME}
+      context: ..
+      dockerfile: base_images/${DOCKER_IMAGE:-default}/Dockerfile
+      target: development
+      args:
+        - DOCKER_IMAGE=${DOCKER_IMAGE:-default}
+    container_name: ${STRATEGY_NAME}_${CONFIG_NAME}_dev
     environment:
-      - SUPER_STRATEGY_ID=${STRATEGY_CONTAINER_NAME}
+      - SUPER_STRATEGY_ID=${STRATEGY_NAME}_${CONFIG_NAME}
       - CONFIG_FILE=/app/config.yaml
       - MODE=${DEPLOYMENT_MODE:-live}
       - PYTHONUNBUFFERED=1
+      - STRATEGY_NAME=${STRATEGY_NAME}
     tty: true
     stdin_open: true
     depends_on:
-      - trading-base
       - redis
-    restart: unless-stopped
-
-  strategy_dev:
-    extends: strategy
     volumes:
-      - ${MERGED_CONFIG}:/app/config.yaml
+      # Mount the strategy directory
+      - type: bind
+        source: ../superalgos/${STRATEGY_NAME}
+        target: /app
+        # target: /app/strategy
+      # Mount common code
+      - type: bind
+        source: ../common
+        target: /app/common
+      # Config file mount
+      - type: bind
+        source: ${MERGED_CONFIG}
+        target: /app/config.yaml
+    command: >
+      bash -c "python main.py && while true; do
+          watchmedo shell-command --patterns="*.py" --recursive --drop --command='python main.py'
+          sleep 1
+      done"
     restart: no
 
 volumes:

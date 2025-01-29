@@ -5,12 +5,12 @@ source "$(dirname "$0")/utils/env.sh"
 
 show_menu() {
     echo "What would you like to do?"
-    echo "1) Test Strategy Locally"
-    echo "2) Deploy to Remote Server"
-    echo "3) Manage Running Strategies"
-    echo "4) Initialize New Project"
-    echo "5) Update superalgorithm CLI"
-    echo "6) Uninstall superalgorithm CLI"
+    echo "1) Test strategy locally"
+    echo "2) Deploy to remote server"
+    echo "3) Manage running strategies"
+    echo "4) Initialize new project"
+    echo "5) Update superalgorithm cli"
+    echo "6) Uninstall superalgorithm cli"
     echo "q) Quit"
 }
 

@@ -7,27 +7,24 @@ from common.utils import common_hello
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
-logger = logging.getLogger("sample strategy")
-
+logger = logging.getLogger("custom_docker_setup")
 
 async def main():
-
     mode = os.getenv("MODE", "live")
 
-    # verify we can load modules from common
-    common_hello()
+    logger.info("This container should use the 'custom_docker_setup'.")
+    logger.info("If not it will throw an error.")
 
-    
+    if logger.info(config["using_custom_docker_base"]) == False:
+        raise Exception("using_custom_docker_base not found")
+
     if mode == "live":
         # place your live strategy code here
-        logger.info("Running in live mode.")
+        logger.info("Running in live mode!")
 
         while True:
-            logger.info(config["exchange"])
-            logger.info(config["budget"])
-            logger.info(config["api_key"])
-            logger.info(["change this to make watchdog restart during live mode."])
-            await asyncio.sleep(2)
+            logger.info("buying more coins")
+            await asyncio.sleep(20)
     else:
         # place your backtest code here
         logger.info("Running in backtest mode.")
