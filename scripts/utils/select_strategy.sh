@@ -3,6 +3,21 @@
 select_strategy() {
     local strategies_dir="./superalgos"
     
+    # Skip if both strategy and config are already set
+    if [ -n "$STRATEGY_NAME" ] && [ -n "$CONFIG_NAME" ]; then
+        # Validate strategy exists
+        if [ ! -d "$strategies_dir/$STRATEGY_NAME" ]; then
+            echo "Error: Strategy '$STRATEGY_NAME' not found" >&2
+            exit 1
+        fi
+        # Validate config exists
+        if [ ! -f "$strategies_dir/$STRATEGY_NAME/configs/${CONFIG_NAME}.yaml" ]; then
+            echo "Error: Config '${CONFIG_NAME}.yaml' not found for strategy '$STRATEGY_NAME'" >&2
+            exit 1
+        fi
+        return
+    fi
+
     echo "Available strategies:"
     local strategies=($(ls $strategies_dir))
     

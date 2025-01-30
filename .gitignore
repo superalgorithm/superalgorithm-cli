@@ -1,7 +1,11 @@
-pyrightconfig.json
+# WARNING, since yml and yaml files potentially contain sensitive data do
+# not remove them from this .gitignore file to avoid accidentally publishing them
+# instead specify explicit which ones you like to track...
+
 *.yml
 !base_images/docker-compose.yml
 *.yaml
+pyrightconfig.json
 .DS_Store
 .tmp
 # Byte-compiled / optimized / DLL files

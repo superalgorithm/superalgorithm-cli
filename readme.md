@@ -21,6 +21,67 @@ cd your-project-folder
 superalgorithm
 ```
 
+# Usage
+
+The CLI can be used in two ways:
+
+### 1. Interactive Mode
+
+Simply run `superalgorithm` without any arguments for a step-by-step guided selection:
+
+```bash
+superalgorithm
+```
+
+This will present an interactive menu where you can:
+
+1. Select the action you want to perform
+2. Choose the strategy and configuration
+3. Set additional options when required
+
+### 2. Command Line Options
+
+For advanced usage or automation, you can use direct command line options:
+
+```bash
+# Test a strategy locally
+superalgorithm test <strategy> <config> [--mode live|backtest]
+
+# Deploy to remote server
+superalgorithm deploy <strategy> <config> [--upload-config]
+
+# Manage running strategies
+superalgorithm manage <strategy> <config> <local|remote> <start|stop|restart|logs|status>
+
+# Cleanup local or remote docker resources
+superalgorithm cleanup <local|remote>
+
+# Other commands
+superalgorithm init        # Initialize new project
+superalgorithm update      # Update CLI
+superalgorithm uninstall   # Remove CLI
+superalgorithm --help      # Show help
+```
+
+Examples:
+
+```bash
+# Test strategy in backtest mode
+superalgorithm test sma_strategy btc_usdt --mode backtest
+
+# Deploy strategy and upload config
+superalgorithm deploy sma_strategy btc_usdt --upload-config
+
+# Start strategy on remote server
+superalgorithm manage sma_strategy btc_usdt remote start
+
+# View remote logs
+superalgorithm manage sma_strategy btc_usdt remote logs
+
+# Clean up local docker resources
+superalgorithm cleanup local
+```
+
 ## Project structure
 
 ### base_images
@@ -127,11 +188,15 @@ Control your strategies with simple commands on both your local and remote machi
 - logs
 - status
 
-### 4. Initialize a new project
+### 4. Clean up local or remote docker resources
+
+This command will remove all unused docker containers and images on your local or remote machine. Only use this if you know what you are doing.
+
+### 5. Initialize a new project
 
 Use this option to initialize a new project from the starter template and create the default folders, files, and sample configurations.
 
-### 5. Update & uninstall
+### 6. Update & uninstall
 
 - Update: Get the latest CLI version
 - Uninstall: Remove CLI from your systems

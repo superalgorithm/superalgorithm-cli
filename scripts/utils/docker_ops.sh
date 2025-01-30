@@ -1,12 +1,11 @@
 #!/bin/bash
 
 source "$(dirname "$0")/utils/merge_config.sh"
+source "$(dirname "$0")/utils/load_env.sh"
 
-# Build and deploy strategy locally
+# Builds and deploys strategy on the local docker host
 build_strategy() {
     
-    
-
     # Check if strategy is selected
     if [ -z "$STRATEGY_NAME" ] || [ -z "$CONFIG_NAME" ]; then
         echo "Error: Strategy not selected. Run select_strategy first." >&2
@@ -15,17 +14,14 @@ build_strategy() {
     
     # Check if deployment mode is set
     if [ -z "$DEPLOYMENT_MODE" ]; then
-        echo "Error: Deployment mode not set. Run select_deploy_mode first." >&2
+        echo "Error: Deployment mode not set. Run select_test_mode first." >&2
         exit 1
     fi
     
     # Set environment variables
-    export STRATEGY_CONTAINER_NAME="${STRATEGY_NAME}_${CONFIG_NAME}"
     export MERGED_CONFIG=$(merge_config)
-    # export DOCKER_IMAGE=$(yq e '.docker_image // "default"' "$MERGED_CONFIG")
     export DOCKER_IMAGE=$(get_docker_image)
 
-    
     
     echo "Building strategy: $STRATEGY_NAME with config: $CONFIG_NAME in $DEPLOYMENT_MODE mode using $DOCKER_IMAGE"
     
@@ -47,7 +43,7 @@ build_strategy() {
     fi
 }
 
-# Clean up strategy container and images
+# Cleans up local strategy container and images
 cleanup_strategy() {
     # Check if strategy is selected
     if [ -z "$STRATEGY_NAME" ] || [ -z "$CONFIG_NAME" ]; then
@@ -55,10 +51,9 @@ cleanup_strategy() {
         exit 1
     fi
     
-    export STRATEGY_CONTAINER_NAME="${STRATEGY_NAME}_${CONFIG_NAME}"
     export MERGED_CONFIG=$(get_merged_config_name)
     
-    echo "Cleaning up strategy: ${STRATEGY_CONTAINER_NAME}"
+    echo "Cleaning up strategy: ${STRATEGY_NAME}_${CONFIG_NAME}"
     docker compose -f $PROJECT_ROOT/base_images/docker-compose.yml stop strategy_dev
     docker compose -f $PROJECT_ROOT/base_images/docker-compose.yml rm -f strategy_dev
     
@@ -66,11 +61,7 @@ cleanup_strategy() {
     docker image prune -f
 }
 
-# Generate a docker-compose file for the selected strategy by:
-# 1. Creating a unique compose file for each strategy+config combination
-# 2. Applying environment variables to the template file
-# 3. Using the specified docker image from config or falling back to default
-
+# Generates the docker-compose file for the selected strategy from the docker-compose.strategy.template.
 generate_strategy_compose() {
     local compose_file="base_images/docker-compose.${STRATEGY_NAME}_${CONFIG_NAME}.yml"
     
@@ -79,4 +70,56 @@ generate_strategy_compose() {
     envsubst < "base_images/docker-compose.strategy.template" > "$compose_file"
     
     echo "$compose_file"
+}
+
+# Execute command based on environment
+execute_docker_command() {
+    local cmd=$1
+    COMPOSE_FILE="base_images/docker-compose.${STRATEGY_NAME}_${CONFIG_NAME}.yml"
+    
+    if [ "$ENV_TYPE" = "local" ]; then
+        docker compose -f $PROJECT_ROOT/base_images/docker-compose.yml -f $PROJECT_ROOT/$COMPOSE_FILE $cmd
+    else
+        if [ -z "$REMOTE_USER" ] || [ -z "$REMOTE_SERVER" ]; then
+            echo "Error: Remote credentials not found in .env file"
+            exit 1
+        fi
+        ssh $REMOTE_USER@$REMOTE_SERVER "cd /opt/trading && \
+            export STRATEGY_NAME=\"$STRATEGY_NAME\" && \
+            docker compose -f base_images/docker-compose.yml -f $COMPOSE_FILE $cmd"
+    fi
+}
+
+cleanup_all() {
+    echo "WARNING: This will remove all stopped containers, unused images, and build cache."
+    read -p "Are you sure you want to proceed? (y/N): " confirm
+    if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+        echo "Cleanup cancelled."
+        return
+    fi
+    
+    echo "Cleaning up containers and images..."
+    
+    if [ "$ENV_TYPE" = "local" ]; then
+        # Clean local docker
+        docker container prune -f
+        docker image prune -af
+        docker builder prune -f
+    else
+
+        load_env true true
+
+        if [ -z "$REMOTE_USER" ] || [ -z "$REMOTE_SERVER" ]; then
+            echo "Error: Remote credentials not found in .env file"
+            exit 1
+        fi
+        # Clean remote docker
+        ssh $REMOTE_USER@$REMOTE_SERVER "
+            echo 'Cleaning up remote containers and images...' && \
+            docker container prune -f && \
+            docker image prune -af && \
+            docker builder prune -f"
+    fi
+    
+    echo "Cleanup complete!"
 }
