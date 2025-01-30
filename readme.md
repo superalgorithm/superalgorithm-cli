@@ -147,7 +147,7 @@ else:
 
 **HOT RELOAD**
 
-File changes to .py files automatically restart your strategy without rebuilding the container, enabling rapid development and testing.
+For backtests any file changes to .py files automatically restart your strategy without rebuilding the container, enabling rapid development and testing.
 
 Check the `sma_strategy` folder for an example.
 

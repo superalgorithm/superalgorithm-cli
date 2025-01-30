@@ -23,12 +23,12 @@ async def main():
         logger.info("Running in live mode!")
 
         while True:
-            logger.info("buying more coins")
+            logger.info("buying more coins...")
             await asyncio.sleep(20)
     else:
         # place your backtest code here
         logger.info("Running in backtest mode.")
-        logger.info("Backtest completed.")
+        logger.info("Backtest completed")
 
 if __name__ == "__main__":
 

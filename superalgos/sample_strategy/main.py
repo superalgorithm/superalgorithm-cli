@@ -26,7 +26,7 @@ async def main():
             logger.info(config["exchange"])
             logger.info(config["budget"])
             logger.info(config["api_key"])
-            logger.info(["change this to make watchdog restart during live mode."])
+            logger.info(["change this line to make watchdog restart during live mode."])
             await asyncio.sleep(2)
     else:
         # place your backtest code here

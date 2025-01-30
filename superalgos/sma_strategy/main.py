@@ -20,9 +20,9 @@ symbol = config.get("symbol")
 
 
 async def backtest_complete_handler(strategy: SMAStrategy):
-    # print(session_stats(strategy.exchange.list_trades()))
+    print(session_stats(strategy.exchange.position_manager.list_trades()))
+    # requires superalgorithm API keys
     await upload_backtest()
-
 
 async def main():
 
