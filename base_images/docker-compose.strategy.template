@@ -14,6 +14,11 @@ services:
       - MODE=live
       - PYTHONUNBUFFERED=1
       - STRATEGY_NAME=${STRATEGY_NAME}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"    # Maximum size of log before rotation
+        max-file: "3"      # Keep up to 3 rotated files
     tty: true
     stdin_open: true
     depends_on:

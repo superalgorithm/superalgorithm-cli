@@ -39,6 +39,7 @@ async def main():
         )
 
         await strategy.start()
+        
 
     else:
 
